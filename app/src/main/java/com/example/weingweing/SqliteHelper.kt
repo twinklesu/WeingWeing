@@ -81,7 +81,7 @@ class SqliteHelper(context: Context, name: String, version: Int) :
             values1.put("si", memo.si)
 
             values2.put("mainKey", memo.endTime + " 0000")
-            values1.put("endKey", memo.endTime + memo.endHour)
+            values2.put("endKey", memo.endTime + memo.endHour)
             values2.put("startTIme", memo.endTime)
             values2.put("startHour", "0000")
             values2.put("endTime", memo.endTime)
