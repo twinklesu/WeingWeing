@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:gravity="center|center_horizontal|center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_GpsOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="위치 기능이 꺼져있어 위치 정보를 자동으로 기록하지 못 했습니다."
+        android:textAlignment="textStart"
+        android:textSize="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_cancel"
+            android:text="취소"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_addLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_add"
+            android:text="추가하기"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>
