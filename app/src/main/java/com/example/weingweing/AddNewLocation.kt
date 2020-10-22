@@ -37,6 +37,7 @@ class AddNewLocation : AppCompatActivity() {
         setContentView(R.layout.activity_add_new_location)
 
         val intent = getIntent()
+        location_tuple = ""
         /*
         기본값으로 day_start는 무조건 주어진다.
         추가하기 버튼으로 들어온 경우: day_start 만 intent에 있음. day_end 값은 자동으로 start와 같은 날짜로 맞춘다
