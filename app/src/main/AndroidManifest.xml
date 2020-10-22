@@ -43,11 +43,16 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".AddNewLocation" />
-        <activity android:name=".TextPage" />
-        <activity android:name=".LocationPage" />
-        <activity android:name=".DetailMyHistory"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".AddNewLocation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TextPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LocationPage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DetailMyHistory"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
