@@ -29,7 +29,7 @@ class TextPage : AppCompatActivity() {
         adapter.listData.addAll(helper.selectMemo())
         recyclerMemo.adapter = adapter
         recyclerMemo.layoutManager = LinearLayoutManager(this)
-        
+
     }
 
 

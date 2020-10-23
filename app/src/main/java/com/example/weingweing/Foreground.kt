@@ -82,8 +82,7 @@ class Foreground : Service() {
         val pendingIntent =
             PendingIntent.getBroadcast(this, 1, i, PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("마스크를 잘 쓰고, 손을 잘 씻으세요!")
-            .setContentText("알림을 눌러 이 안내 메시지를 끌 수 있습니다")
+            .setContentTitle("알림을 눌러 이 안내 메시지를 끌 수 있습니다.")
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentIntent(pendingIntent)
             .build()
