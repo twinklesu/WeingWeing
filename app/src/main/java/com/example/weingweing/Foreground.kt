@@ -48,7 +48,7 @@ class Foreground : Service() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     var locationManager: LocationManager? = null
-    val interval: Long = 10010
+    val interval: Long = 300010
     var countNoGPS = -1
     var noGPSST = ""
     var noGPSET = ""
@@ -87,7 +87,7 @@ class Foreground : Service() {
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentIntent(pendingIntent)
             .build()
-
+        startForegroundService(intent)
         startForeground(99, notification)
 
         runBackground()
@@ -175,7 +175,7 @@ class Foreground : Service() {
                 val mySpeed = distance/(interval/1000)
                 lastLati=latitude
                 lastLongti=longitude
-                if (distance <=41){
+                if (distance <=1250){
                     Log.d("Speed", "속도 정상, 속도 : $mySpeed, 거리 : $distance")
                     Log.d("CheckCurrentLocation", "현재 내 위치 값: $latitude, $longitude")
                     var geocoder = Geocoder(applicationContext, Locale.KOREAN)

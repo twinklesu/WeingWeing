@@ -114,7 +114,7 @@ class AddNewLocation : AppCompatActivity() {
             var dateFormat = SimpleDateFormat("yyyyMMdd")
             var a =day_start.toInt()
             var b =day_end.toInt()
-            Log.d("Time", "현재 주소 값: $a,$b")
+
             println(((SimpleDateFormat("yyyyMMddHHmm").format(Date(time))).toLong() < (day_end+time_end).toLong()))
             println(((day_end+time_end).toLong()<(day_start+time_start).toLong()))
             if (day_start=="" || day_end=="" || time_start=="" || time_end=="" || location_tuple=="" || dong =="" || si=="" || gu==""){
@@ -125,6 +125,7 @@ class AddNewLocation : AppCompatActivity() {
                 (day_start.toInt() > day_end.toInt())) {
                 Toast.makeText(this, "날짜를 확인해 주세요!", Toast.LENGTH_SHORT).show()
             }else if (((SimpleDateFormat("yyyyMMddHHmm").format(Date(time))).toLong() < (day_end+time_end).toLong())||((day_end+time_end).toLong()<(day_start+time_start).toLong())) { //같은 날 일때는 시간 순서 고려
+
                 Toast.makeText(this, "시간을 확인해 주세요!", Toast.LENGTH_SHORT).show()
             }else if(!helper.checkToInsert(day_start+" "+time_start, day_end+" "+time_end)){
                 Toast.makeText(this, "지정한 시간 사이에 이미 저장된 위치기록이 있습니다.", Toast.LENGTH_LONG).show()
