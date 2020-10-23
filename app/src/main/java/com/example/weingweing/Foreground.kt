@@ -615,7 +615,7 @@ class Foreground : Service() {
                                                                 var userEH = myTime[3]
                                                                 var userGPS: String = myTime[4]
                                                                 var infected_date_raw = i.toString()
-                                                                var check_helper2 = coronaST+coronaSH
+                                                                var check_helper2 = coronaST+coronaSH+userSH
                                                                 var infected_date = "${infected_date_raw.substring(4, 6).toInt()}월 ${infected_date_raw.substring(6).toInt()}일"
                                                                 var corona_num_1: String = corona_num.joinToString(",", "", "")
                                                                 var check = helper2.compareMemo("mainKey", "coronaEH", check_helper2, coronaEH)
