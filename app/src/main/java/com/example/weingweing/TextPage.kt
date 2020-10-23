@@ -29,17 +29,7 @@ class TextPage : AppCompatActivity() {
         adapter.listData.addAll(helper.selectMemo())
         recyclerMemo.adapter = adapter
         recyclerMemo.layoutManager = LinearLayoutManager(this)
-
-        val memo = Memo2(
-            "20201011 1117", "201", "20201011","20200923", "1000", "20200923", "1100", "서울특별시 노원구 공릉동",
-            "기타사항", "서울특별시", "노원구", "공릉동", "20201011", "1020", "20200923", "1040", "(37.65,127.384)"
-        )
-        helper.insertMemo(memo)
-        val memo1 = Memo2(
-            "20201011 1110", "201", "20201011","20200923", "1000", "20200923", "1100", "서울특별시 노원구 하계동",
-            "기타사항", "서울특별시", "노원구", "하계동", "20201011", "1020", "20200923", "1040", "(37.65,127.384)"
-        )
-        helper.insertMemo(memo1)
+        
     }
 
 
