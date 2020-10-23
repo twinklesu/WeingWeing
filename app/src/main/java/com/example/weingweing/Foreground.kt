@@ -87,7 +87,6 @@ class Foreground : Service() {
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentIntent(pendingIntent)
             .build()
-        startForegroundService(intent)
         startForeground(99, notification)
 
         runBackground()

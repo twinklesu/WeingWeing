@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val helper = SqliteHelper(this, "memo.db", 1)
         checkPermission()
-
+        val memo = Memo("19990101 0100","19990101 0101","0101","0100","0101","0101","11","없음","없음","없음","없음")
+        helper.insertMemo(memo)
         if(!isStart) {
             btn_stop_tracking.text = "위치 기록 시작하기"
         }
