@@ -41,8 +41,8 @@ class Foreground : Service() {
     val checkDong = Dong()
     var bh = checkDong.bh
     var hb = checkDong.hb
+    var checkFirst = 0
 
-    var checkFirst=0
 
     val helper = SqliteHelper(this, "memo.db", 1)
     var helper2 = SqliteHelper2(this, "memo2.db", 1)
@@ -173,8 +173,9 @@ class Foreground : Service() {
                 endPoint.setLongitude(longitude!!)
                 if (checkFirst == 0){
                     startPoint=endPoint
+                    checkFirst == 1
                 }
-                checkFirst=1
+
                 val distance: Float = startPoint.distanceTo(endPoint)
                 val mySpeed = distance/(interval/1000)
                 lastLati=latitude
