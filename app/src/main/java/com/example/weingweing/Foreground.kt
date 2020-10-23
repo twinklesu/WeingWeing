@@ -41,7 +41,6 @@ class Foreground : Service() {
     val checkDong = Dong()
     var bh = checkDong.bh
     var hb = checkDong.hb
-    var checkFirst = 0
 
 
     val helper = SqliteHelper(this, "memo.db", 1)
@@ -171,17 +170,12 @@ class Foreground : Service() {
                 val endPoint = Location("locationA")
                 endPoint.setLatitude(latitude!!)
                 endPoint.setLongitude(longitude!!)
-                if (checkFirst == 0){
-                    startPoint=endPoint
-                    checkFirst == 1
-                }
 
                 val distance: Float = startPoint.distanceTo(endPoint)
-                val mySpeed = distance/(interval/1000)
                 lastLati=latitude
                 lastLongti=longitude
                 if (distance <=1250){
-                    Log.d("Speed", "속도 정상, 속도 : $mySpeed, 거리 : $distance")
+                    Log.d("Speed", "속도 정상, 거리 : $distance")
                     Log.d("CheckCurrentLocation", "현재 내 위치 값: $latitude, $longitude")
                     var geocoder = Geocoder(applicationContext, Locale.KOREAN)
                     var addressList: List<Address>? = null
@@ -294,16 +288,16 @@ class Foreground : Service() {
                             var time = System.currentTimeMillis()
                             var dateFormat = SimpleDateFormat("yyyyMMdd HHmm")
                             val endTime =
-                                dateFormat.format(Date(time + (interval))).subSequence(0, 8)
+                                dateFormat.format(Date(time)).subSequence(0, 8)
                                     .toString()
                             var endHour =
-                                dateFormat.format(Date(time + (interval))).subSequence(9, 13)
+                                dateFormat.format(Date(time)).subSequence(9, 13)
                                     .toString()
                             time = setTime
                             var startTime =
-                                dateFormat.format(Date(time)).subSequence(0, 8).toString()
+                                dateFormat.format(Date(time-(interval))).subSequence(0, 8).toString()
                             var startHour =
-                                dateFormat.format(Date(time)).subSequence(9, 13).toString()
+                                dateFormat.format(Date(time-(interval))).subSequence(9, 13).toString()
                             delGPS = delGPS + "@" + "($latitude, $longitude)"
                             val delmemo = Memo(
                                 startTime + " " + startHour,
@@ -340,12 +334,12 @@ class Foreground : Service() {
                             Log.d("변화", "$lastLoc 에서 $dong 으로")
                             val time = System.currentTimeMillis()
                             var dateFormat = SimpleDateFormat("yyyyMMdd HHmm")
-                            var startTime = dateFormat.format(Date(time)).subSequence(0, 8).toString()
-                            var startHour = dateFormat.format(Date(time)).subSequence(9, 13).toString()
+                            var startTime = dateFormat.format(Date(time- (interval))).subSequence(0, 8).toString()
+                            var startHour = dateFormat.format(Date(time- (interval))).subSequence(9, 13).toString()
                             val endTime =
-                                dateFormat.format(Date(time + (interval))).subSequence(0, 8).toString()
+                                dateFormat.format(Date(time)).subSequence(0, 8).toString()
                             var endHour =
-                                dateFormat.format(Date(time + (interval))).subSequence(9, 13).toString()
+                                dateFormat.format(Date(time)).subSequence(9, 13).toString()
                             val memo = Memo(
                                 startTime + " " + startHour,
                                 endTime + " " + endHour,
@@ -368,13 +362,13 @@ class Foreground : Service() {
                         }
                     }
                 }else{ if (distance <=1000_000){
-                    Log.d("Speed", "속도 너무 빠름, 속도 : $mySpeed, 거리 : $distance")
+                    Log.d("Speed", "속도 너무 빠름, 속도 : 거리 : $distance")
                     val time = System.currentTimeMillis()
                     var dateFormat = SimpleDateFormat("yyyyMMdd HHmm")
-                    var startTime = dateFormat.format(Date(time)).subSequence(0,8).toString()
-                    var startHour = dateFormat.format(Date(time)).subSequence(9,13).toString()
-                    val endTime = dateFormat.format(Date(time + (interval))).subSequence(0,8).toString()
-                    var endHour = dateFormat.format(Date(time + (interval))).subSequence(9,13).toString()
+                    var startTime = dateFormat.format(Date(time-(interval))).subSequence(0,8).toString()
+                    var startHour = dateFormat.format(Date(time-(interval))).subSequence(9,13).toString()
+                    val endTime = dateFormat.format(Date(time)).subSequence(0,8).toString()
+                    var endHour = dateFormat.format(Date(time)).subSequence(9,13).toString()
                     val memo = Memo(startTime+" "+startHour, endTime+" "+endHour, startTime, startHour, endTime, endHour, "($latitude, $longitude)", "시속30km 이상으로 삭제", "", "", "")
                     helper.insertMemo(memo)
                     lastLoc = ""

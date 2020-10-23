@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var pauseTime: Long = 0L
     }
-    val foreground=Foreground()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -80,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             }
             else {
                 isStart = false
-                foreground.checkFirst=0
                 Toast.makeText(this, "위치기록을 정지합니다", Toast.LENGTH_SHORT).show()
                 pauseTime = System.currentTimeMillis()
                 btn_stop_tracking.text = "위치 기록 시작하기"
