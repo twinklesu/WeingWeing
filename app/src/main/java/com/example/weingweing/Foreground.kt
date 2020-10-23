@@ -42,6 +42,8 @@ class Foreground : Service() {
     var bh = checkDong.bh
     var hb = checkDong.hb
 
+    var checkFirst=0
+
     val helper = SqliteHelper(this, "memo.db", 1)
     var helper2 = SqliteHelper2(this, "memo2.db", 1)
 
@@ -163,12 +165,16 @@ class Foreground : Service() {
                 latitude = location.latitude
                 longitude = location.longitude
 
-                val startPoint = Location("locationA")
+                var startPoint = Location("locationA")
                 startPoint.setLatitude(lastLati!!)
                 startPoint.setLongitude(lastLongti!!)
                 val endPoint = Location("locationA")
                 endPoint.setLatitude(latitude!!)
                 endPoint.setLongitude(longitude!!)
+                if (checkFirst == 0){
+                    startPoint=endPoint
+                }
+                checkFirst=1
                 val distance: Float = startPoint.distanceTo(endPoint)
                 val mySpeed = distance/(interval/1000)
                 lastLati=latitude
@@ -547,6 +553,7 @@ class Foreground : Service() {
                                                         for (time in dataSnapshot.child(i.toString()).child(si).child(gu).child(dbDong).child(myTime[0]).children) {
                                                             var infected_start_string = time.key.toString().substring(0, 4)
                                                             var infected_end_string = time.key.toString().substring(5, 9)
+                                                            Log.d("infected_end_string",infected_end_string)
                                                             var infected_start_minus = ""
                                                             var infected_end_plus = ""
                                                             if (infected_start_string.substring(2, 4).toInt() < 30) {
@@ -562,8 +569,9 @@ class Foreground : Service() {
                                                             if (infected_end_string.substring(2, 4).toInt() > 30) {
                                                                 infected_end_plus = (infected_end_string.substring(0, 2).toInt() + 1).toString() + (-60 + (30 + infected_end_string.substring(2, 4).toInt())).toString()
                                                             } else {
-                                                                infected_end_plus = infected_end_string.substring(0, 2) + ((infected_end_string.substring(2, 4).toInt() + 30)).toString()
+                                                                infected_end_plus = infected_end_string.substring(0, 2) + (infected_end_string.substring(2, 4).toInt() + 30).toString()
                                                             }
+                                                            Log.d("infected edn plus", infected_end_plus)
                                                             if ((((infected_start_minus).toInt() <= myTime[1].toInt()) && (myTime[1].toInt() <= (infected_end_plus.toInt()))) || (((infected_start_minus).toInt() <= myTime[3].toInt()) && (myTime[3].toInt() <= (infected_end_plus.toInt()))) || (((infected_start_minus).toInt() >= myTime[1].toInt()) && (myTime[3].toInt() >= (infected_end_plus.toInt())))) {
                                                                 //push알람
 
@@ -579,13 +587,8 @@ class Foreground : Service() {
                                                                 } else {
                                                                     coronaET = myTime[0]
                                                                 }
-                                                                var coronaEH = ""
-                                                                if(infected_end_plus.toInt()<1000){
-                                                                    coronaEH = "0"+((infected_end_plus.toInt() - 30).toString())
-                                                                }
-                                                                else{
-                                                                    coronaEH = (infected_end_plus.toInt() - 30).toString()
-                                                                }
+                                                                var coronaEH = infected_end_string
+
                                                                 Log.d("코로나끝나는시간",coronaEH)
                                                                 var corona_num = mutableListOf<String>()
                                                                 for (z in time.children) {
@@ -612,25 +615,26 @@ class Foreground : Service() {
                                                                 var userEH = myTime[3]
                                                                 var userGPS: String = myTime[4]
                                                                 var infected_date_raw = i.toString()
+                                                                var check_helper2 = coronaST+coronaSH
                                                                 var infected_date = "${infected_date_raw.substring(4, 6).toInt()}월 ${infected_date_raw.substring(6).toInt()}일"
                                                                 var corona_num_1: String = corona_num.joinToString(",", "", "")
-                                                                var check = helper2.compareMemo("mainKey", "coronaEH", mainKey, coronaEH)
+                                                                var check = helper2.compareMemo("mainKey", "coronaEH", check_helper2, coronaEH)
                                                                 var checkNum = 0
                                                                 if (check.isEmpty()) {
                                                                     Log.d("del address", "$address")
                                                                     Log.d("del ETC", "$ETC")
-                                                                    val memo = Memo2(mainKey, corona_num_1, infected_date, coronaST, coronaSH, coronaET, coronaEH, address.toString().substring(1, address.toString().length - 1), ETC.toString().substring(1, ETC.toString().length - 1), si, gu, dbDong, userST, userSH, userET, userEH, userGPS)
+                                                                    val memo = Memo2(check_helper2, corona_num_1, infected_date, coronaST, coronaSH, coronaET, coronaEH, address.toString().substring(1, address.toString().length - 1), ETC.toString().substring(1, ETC.toString().length - 1), si, gu, dbDong, userST, userSH, userET, userEH, userGPS)
                                                                     Log.d("memo",memo.toString())
                                                                     helper2.insertMemo(memo)
                                                                     overlapPush(memo)
                                                                 } else {
                                                                     for (b in 0 until check.size) {
                                                                         if (checkNum != 3) {
-                                                                            if (!(check[b][0] == mainKey && check[b][1] == coronaEH)) {
-                                                                                if (check[b][0] == mainKey && check[b][1] == coronaEH) {
+                                                                            if (!(check[b][0] == check_helper2 && check[b][1] == coronaEH && check[b][2] == corona_num_1)) {
+                                                                                if (check[b][0] == check_helper2 && check[b][1] == coronaEH && check[b][2] != corona_num_1) {
                                                                                     checkNum = 1
                                                                                 } else {
-                                                                                    if (checkNum != 1) {
+                                                                                    if (checkNum != 1){
                                                                                         checkNum = 2
                                                                                     }
                                                                                 }
@@ -639,17 +643,18 @@ class Foreground : Service() {
                                                                             }
                                                                         }
                                                                     }
-                                                                }
-                                                                if (checkNum == 1) {
-                                                                    //시간은 다 같은데
-                                                                    val memo = Memo2(mainKey, corona_num_1, infected_date, coronaST, coronaSH, coronaET, coronaEH, address.toString().substring(1, address.toString().length - 1), ETC.toString().substring(1, ETC.toString().length - 1), si, gu, dbDong, userST, userSH, userET, userEH, userGPS)
-                                                                    helper2.deleteMemo(memo)
-                                                                    helper2.insertMemo(memo)
-                                                                    overlapPush2(memo)
-                                                                } else if (checkNum == 2) {
-                                                                    val memo = Memo2(mainKey, corona_num_1, infected_date, coronaST, coronaSH, coronaET, coronaEH, address.toString().substring(1, address.toString().length - 1), ETC.toString().substring(1, ETC.toString().length - 1), si, gu, dbDong, userST, userSH, userET, userEH, userGPS)
-                                                                    helper2.insertMemo(memo)
-                                                                    overlapPush(memo)
+                                                                    if (checkNum == 1) {
+                                                                        //시간은 다 같은데
+                                                                        val memo = Memo2(check_helper2, corona_num_1, infected_date, coronaST, coronaSH, coronaET, coronaEH, address.toString().substring(1, address.toString().length - 1), ETC.toString().substring(1, ETC.toString().length - 1), si, gu, dbDong, userST, userSH, userET, userEH, userGPS)
+                                                                        helper2.deleteMemo(memo)
+                                                                        helper2.insertMemo(memo)
+                                                                        overlapPush2(memo)
+                                                                    } else if (checkNum == 2) {
+                                                                        val memo = Memo2(check_helper2, corona_num_1, infected_date, coronaST, coronaSH, coronaET, coronaEH, address.toString().substring(1, address.toString().length - 1), ETC.toString().substring(1, ETC.toString().length - 1), si, gu, dbDong, userST, userSH, userET, userEH, userGPS)
+                                                                        helper2.insertMemo(memo)
+                                                                        overlapPush(memo)
+                                                                    }
+
                                                                 }
                                                             }
                                                         }

@@ -88,7 +88,8 @@ class SqliteHelper2(context: Context, name: String, version: Int) : SQLiteOpenHe
             while (cursor.moveToNext()) {
                 val mainKey = cursor.getString(cursor.getColumnIndex("mainKey"))
                 val endTime = cursor.getString(cursor.getColumnIndex("coronaEH"))
-                list = mutableListOf(mainKey, endTime)
+                val num = cursor.getString(cursor.getColumnIndex("num"))
+                list = mutableListOf(mainKey, endTime, num)
                 result.add(list)
             }
             cursor.close()
