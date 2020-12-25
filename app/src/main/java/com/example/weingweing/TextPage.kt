@@ -28,7 +28,8 @@ class TextPage : AppCompatActivity() {
         val view: View = findViewById(R.id.recyclerMemo)
         adapter.helper = helper
         delete14()
-        val initMemo = Memo2(SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis())).toString(), "예시데이터",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-172800000)).toString(),SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1310",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1320","서울특별시 서대문구 연희동","마스크착용","서울특별시","서대문구","연희동",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1300",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1330","(37.571797499999995, 126.93252539999999)")
+        val initMemo = Memo2("20201226", "예시데이터",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-172800000)).toString(),SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1310",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1320","서울특별시 서대문구 연희동","마스크착용","서울특별시","서대문구","연희동",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1300",SimpleDateFormat("yyyyMMdd").format(Date(System.currentTimeMillis()-86400000)).toString(),"1330","(37.571797499999995, 126.93252539999999)")
+        helper.deleteMemo(initMemo)
         helper.insertMemo(initMemo)
         adapter.listData.addAll(helper.selectMemo())
         recyclerMemo.adapter = adapter

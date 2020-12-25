@@ -75,7 +75,7 @@ class DetailMyHistory : AppCompatActivity() {
                     dataSnapshot.child(intent.getStringExtra("num").toString().substring(0,3)).getValue()
                         .toString()
                 // TODO: handle the post
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url.toString()))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sdm.go.kr/news/corona19/coronaInfo.do?mode=view&sdmBoardSeq=236109"))
                 startActivity(intent)
             }
 
