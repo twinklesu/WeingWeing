@@ -135,6 +135,7 @@ class AddNewLocation : AppCompatActivity() {
                 helper.insertMemo(storeDB)
                 val intent = Intent(this, LocationPage::class.java)
                 val input = SimpleDateFormat("yyyyMMdd").parse(day_start).time
+
                 intent.putExtra("currentTime",input)
                 startActivity(intent)
                 finish()

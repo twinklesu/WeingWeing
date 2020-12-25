@@ -106,7 +106,7 @@ class Foreground : Service() {
                 } else if ((!isStart) && (System.currentTimeMillis() - pauseTime >= 60000)) { //
                     recordOffPush()
                 }
-                getFirebase()
+//                getFirebase()
                 Thread.sleep(interval) //1초마다 로그 찍음
             }
         }
@@ -149,7 +149,7 @@ class Foreground : Service() {
                     Log.d("Nogps", "현재 주소 값: $countNoGPS")
                     countNoGPS+=1
                 }else if(countNoGPS == 12){
-                    noGPSET=SimpleDateFormat("yyyyMMdd HHmm").format(Date(System.currentTimeMillis()))
+                    noGPSET=SimpleDateFormat("yyyymmddhhmmss").format(Date(System.currentTimeMillis()))
                     Log.d("Nogps", "현재 주소 값: $countNoGPS")
                     countNoGPS=1
                     Log.d("Nogps", "$noGPSST: $noGPSET")

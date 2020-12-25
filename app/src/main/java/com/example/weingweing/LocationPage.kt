@@ -21,6 +21,9 @@ class LocationPage : AppCompatActivity() {
         var realTime= intent.getLongExtra("currentTime",0)
         delete14()
         var getTime = intent.getLongExtra("currentTime",0)
+        if (getTime < System.currentTimeMillis()-1296000000){
+            getTime=System.currentTimeMillis()-1209600000
+        }
         searchDate.text= SimpleDateFormat("yyyy-MM-dd").format(Date(getTime))
         @SuppressLint("MissingPermission")
         if(getTime+86400000>System.currentTimeMillis()){
